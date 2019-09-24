@@ -340,7 +340,7 @@ first_seventh_row_slice = f500.iloc[[0,6], :5] # first and seventh rows and the 
 #%%
 # Add a new column to a dataframe
 previously_ranked = f500[f500["previous_rank"].notnull()]
-rank_change1 = previously_rank["previous_rank"] - previously_ranked["rank"]
+rank_change1 = previously_ranked["previous_rank"] - previously_ranked["rank"]
 f500["rank_change1"] = rank_change1
 
 #%% [mardown]
