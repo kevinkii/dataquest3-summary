@@ -285,8 +285,15 @@ print(top5_rank_revenue)
 # |`a | b`| `a or b` | `True` if both `a` or `b` are `True` |
 # | `~a` | `not a` | `True` if `a` is `False`, else `False`|
 
-# %%
+#%% [mardown]
+# Sorting a value
+# `df.sort_value("col1", ascending = False)`
+#
+# Returning an array of unique values from any series
+# `df["col1"].unique()` 
 
+#%%
+# Creating a dataframe
 data = np.array([['', 'Col1', 'Col2'], ['Row1', 1, 2], ['Row2', 3, 4]])
 
 df = pd.DataFrame(data=data[1:, 1:],    # values
@@ -344,8 +351,10 @@ rank_change1 = previously_ranked["previous_rank"] - previously_ranked["rank"]
 f500["rank_change1"] = rank_change1
 
 #%% [mardown]
-# Sorting a value
-# `df.sort_value("col1", ascending = False)`
-#
-# Returning an array of unique values from any series
-# `df["col1"].unique()` 
+# ## Data Cleaning Basics
+# ### Reading a CSV in With a Speicific Encoding
+
+#%%
+# Reading in a CSV file using Latin encoding
+laptops = pd.read_csv("laptops.csv", encoding="Latin-1")
+
