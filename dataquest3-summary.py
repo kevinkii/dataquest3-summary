@@ -203,7 +203,7 @@ dtaxi["pickup_month"]
 
 # %%
 # Selecting multiple columns
-dtaxi[["pickup_year", "pickup_month"]]
+dtaxi[["pickup_day", "pickup_month"]]
 
 # %%
 dtaxi.head(5)  # select first 5 rows
@@ -350,11 +350,93 @@ previously_ranked = f500[f500["previous_rank"].notnull()]
 rank_change1 = previously_ranked["previous_rank"] - previously_ranked["rank"]
 f500["rank_change1"] = rank_change1
 
-#%% [mardown]
+#%% [markdown]
 # ## Data Cleaning Basics
 # ### Reading a CSV in With a Speicific Encoding
+#
+# Reading in a CSV file uisng UTF-8
+#
+# `laptops = pd.read_csv("laptops.csv", encoding="UTF-8")`
+
+#%%
+# Reading in a CSV file uisng Windows-1251
+laptops = pd.read_csv("laptops.csv", encoding="Windows-1251")
 
 #%%
 # Reading in a CSV file using Latin encoding
 laptops = pd.read_csv("laptops.csv", encoding="Latin-1")
+laptops.info()
 
+#%% [markdown]
+# ### Modifying Columns in a dataframe
+
+#%%
+# Cleaning column in data
+new_columns = []
+
+def clean_col(col):
+    col = col.strip(" ")
+    col = col.replace("Operating System", "os")
+    col = col.replace(" ","_")
+    col = col.replace("(","")
+    col = col.replace(")","")
+    col = col.lower()
+    return col
+
+new_columns = []
+for c in laptops.columns:
+    clean_c = clean_col(c)
+    new_columns.append(clean_c)
+laptops.columns = new_columns
+laptops.dtypes
+
+#%%
+# Modifying the name of column
+unique_ram = laptops["ram"].unique()
+laptops["ram"] = laptops["ram"].str.replace("GB","").astype(int) # remove "GB" & convert to intger
+laptops.dtypes
+
+#%%
+# Renanming an Existing Column
+laptops.rename({'ram':'ram_gb'}, axis = 1, inplace = True)
+
+laptops["ram_gb"].describe()
+
+#%% [markdown]
+# ### String Column Operations
+
+#%%
+# Extracting Values From Strings
+laptops["gpu_manufacturer"] = (laptops["gpu"].str.split()
+                                             .str[0]
+                                            )
+
+laptops["cpu_manufacturer"] = (laptops["cpu"].str.split()
+                                             .str[0]
+                                            )
+#%% [markdown]
+# ### Fixing Values
+
+#%%
+# Replacing Values Using A Mapping Dictionary
+mapping_dict = {'Android': 'Android',
+                'Chrome OS': 'Chrome OS',
+                'Linux': 'Linux',
+                'Mac OS': 'macOS',
+                'No OS': 'No OS',
+                'Windows': 'Windows',
+                'macOS': 'macOS'}
+
+laptops["os"] = laptops["os"].map(mapping_dict) 
+
+#%%
+# Dropping Missing Values
+# it droped **the whole** rows or columns if there is an missing values
+laptops_no_null_rows = laptops.dropna(axis=0)
+laptops_no_null_cols = laptops.dropna(axis=1)
+
+#%%
+# Exporting Clean Data
+laptops["weight"] = laptops["weight"].str.replace("kgs","")                                     .str.replace("kg","")                                       .astype(float)
+laptops.rename({"weight":"weight_kg"},axis=1,inplace=True)
+laptops.to_csv("laptops_cleaned.csv", index=False)
