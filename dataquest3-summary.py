@@ -131,7 +131,7 @@ taxi_copy = taxi.copy()
 # ## Introduction to Pandas
 # ### Pandas Dataframe Basics
 #
-# df.loc(row_label, column_label)
+# `df.loc(row_label, column_label)`
 #
 # | **Select by Label** | **Explicit Syntax** | **Shorthand Convention** |
 # | --- | --- | --- |
@@ -277,12 +277,12 @@ print(top5_rank_revenue)
 # | Slice of rows from dataframe | `df.iloc[3:5]` | `df[3:5]` |
 # | Single items from series | `s.iloc[8]` | `s[8]` |
 # | List of tiem from series | `s.iloc[[2,8,1]]` | `s[[2,8,1]]` |
-# | Silce of items from series | `s.iloc[5:10]` | `s[5:10] |`
+# | Silce of items from series | `s.iloc[5:10]` | `s[5:10]` |
 #
 # | **pandas** | **Python equivalent** | **Meaning** |
 # | --- | --- | --- |
 # |`a & b`| `a and b` | `True` if both `a` and `b` are `True`, else `False` |
-# |`a | b`| `a or b` | `True` if both `a` or `b` are `True` |
+# |`a \| b`| `a or b` | `True` if both `a` or `b` are `True` |
 # | `~a` | `not a` | `True` if `a` is `False`, else `False`|
 
 #%% [mardown]
